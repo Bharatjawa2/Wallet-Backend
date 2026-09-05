@@ -1,8 +1,12 @@
 import express from "express";
 import "dotenv/config";
 import { sql } from "./config/database.js";
+import ratelimiter from "./middleware/rateLimiter.js";
 
 const app = express();
+app.set("trust proxy", 1);
+// middlewares
+app.use(ratelimiter);
 app.use(express.json()); // built-in Middleware
 
 const PORT = process.env.PORT || 8003;
